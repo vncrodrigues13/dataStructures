@@ -1,7 +1,8 @@
 package main.java.br.unicap.universidadedigital.colecoes.arvore;
-
 import main.java.br.unicap.universidadedigital.colecoes.comum.NoArvore;
-public class Arvore<T> {
+import br.unicap.universidadedigital.colecoes.exceptions.ItemNaoEncontradoException;
+        
+public class Arvore <T extends Comparable<T> > {
     
     private NoArvore raiz;
     
@@ -30,14 +31,33 @@ public class Arvore<T> {
         int cmp = raiz.compareTo(element);
         
         if (cmp > 0){
-            raiz.setDireita(element);
+            treeAdd(raiz.getDireita(), element);
         }else if (cmp < 0){
             treeAdd(raiz.getEsquerda(), element);
+        }
+    }
+    
+    
+    public NoArvore<T> getElement(T element) throws ItemNaoEncontradoException{
+        return buscarElemento(raiz, element);
+    }
+    
+    
+    private NoArvore<T> buscarElemento(NoArvore<T> raiz,T element) throws ItemNaoEncontradoException{
+        if (raiz == null)
+            throw new ItemNaoEncontradoException();
+        
+        int aux = raiz.compareTo(element);
+        
+        if (aux > 0){
+            return buscarElemento(raiz.getDireita(), element);
+        }else if (aux < 0){
+            return buscarElemento(raiz.getEsquerda(), element);
         }else{
-            
+            return raiz;
         }
         
-            
+        
     }
     
     

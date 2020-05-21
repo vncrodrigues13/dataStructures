@@ -5,7 +5,7 @@
  */
 package main.java.br.unicap.universidadedigital;
 
-import br.unicap.universidadedigital.alunos.entidades.Aluno;
+import main.java.br.unicap.universidadedigital.alunos.entidades.Aluno;
 import main.java.br.unicap.universidadedigital.alunos.controladores.ControladorAluno;
 
 
