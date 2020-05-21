@@ -13,7 +13,9 @@ public class Arvore <T extends Comparable<T> > {
         addListElement(elements);
     }
     public void addListElement(T elements[]){
-        
+        for (T element: elements){
+            adicionar(element);
+        }
     }
     
     public void adicionar(T element){
@@ -56,8 +58,6 @@ public class Arvore <T extends Comparable<T> > {
         }else{
             return raiz;
         }
-        
-        
     }
     
     
