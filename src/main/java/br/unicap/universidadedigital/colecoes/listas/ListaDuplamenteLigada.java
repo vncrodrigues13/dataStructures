@@ -7,7 +7,7 @@ package main.java.br.unicap.universidadedigital.colecoes.listas;
 import main.java.br.unicap.universidadedigital.colecoes.listas.iteradores.IteradorListaSimplesmenteLigada;
 import br.unicap.universidadedigital.colecoes.exceptions.ItemNaoEncontradoException;
 import main.java.br.unicap.universidadedigital.colecoes.comum.No;
-import br.unicap.universidadedigital.colecoes.exceptions.PosicaoInvalidaException;
+import main.java.br.unicap.universidadedigital.colecoes.exceptions.PosicaoInvalidaException;
 import main.java.br.unicap.universidadedigital.colecoes.comum.NoDuplamenteLigado;
 
 /*

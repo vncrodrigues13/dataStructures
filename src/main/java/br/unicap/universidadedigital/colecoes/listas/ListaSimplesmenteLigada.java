@@ -7,7 +7,7 @@ package main.java.br.unicap.universidadedigital.colecoes.listas;
 import main.java.br.unicap.universidadedigital.colecoes.listas.iteradores.IteradorListaSimplesmenteLigada;
 import br.unicap.universidadedigital.colecoes.exceptions.ItemNaoEncontradoException;
 import main.java.br.unicap.universidadedigital.colecoes.comum.No;
-import br.unicap.universidadedigital.colecoes.exceptions.PosicaoInvalidaException;
+import main.java.br.unicap.universidadedigital.colecoes.exceptions.PosicaoInvalidaException;
 
 /**
  *
@@ -215,8 +215,6 @@ public class ListaSimplesmenteLigada <T>{
     }
     
     public No<T> removerInicio()  throws ItemNaoEncontradoException {
-        
-        
         if(inicio == null ){
             throw new ItemNaoEncontradoException();
         }
@@ -252,9 +250,7 @@ public class ListaSimplesmenteLigada <T>{
             
             anterior = iterador;
             iterador = iterador.getProximo();
-        
         }
-        
         return null;
     }
 
@@ -279,6 +275,7 @@ public class ListaSimplesmenteLigada <T>{
     public IteradorListaSimplesmenteLigada<T> iterador() {
         return new IteradorListaSimplesmenteLigada<>(this.inicio);
     }
+    
     
     @Override
     public String toString() {

@@ -1,7 +1,10 @@
 package main.java.br.unicap.universidadedigital.colecoes.arvore;
 import main.java.br.unicap.universidadedigital.colecoes.comum.NoArvore;
 import br.unicap.universidadedigital.colecoes.exceptions.ItemNaoEncontradoException;
-        
+
+
+import main.java.br.unicap.universidadedigital.colecoes.listas.ListaSimplesmenteLigada;
+
 public class Arvore <T extends Comparable<T> > {
     
     private NoArvore raiz;
@@ -59,6 +62,29 @@ public class Arvore <T extends Comparable<T> > {
             return raiz;
         }
     }
+    
+    
+    public ListaSimplesmenteLigada<T> getPreOrdem(){
+        ListaSimplesmenteLigada<T> listaauxiliar = new ListaSimplesmenteLigada<>();
+        
+        return listaauxiliar;
+    }
+    
+    private T ordem(NoArvore<T> raiz){
+        
+        if (raiz.getEsquerda() != null){
+            ordem(raiz.getEsquerda());
+        }
+        
+        return raiz.getValor();
+        
+        
+        
+        
+    }
+    
+    
+    
     
     
 }
