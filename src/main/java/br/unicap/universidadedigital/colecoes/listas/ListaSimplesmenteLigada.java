@@ -152,11 +152,11 @@ public class ListaSimplesmenteLigada <T>{
     }
     
 
-    public boolean existe(No no) {
+    public boolean existe(T no) {
         No<T> iterador = inicio;
-        
+        No<T> value = (No)no;
         do{
-            if(iterador.getValor().equals(no.getValor())){
+            if(iterador.getValor().equals(value.getValor())){
                 return true;
             }
             

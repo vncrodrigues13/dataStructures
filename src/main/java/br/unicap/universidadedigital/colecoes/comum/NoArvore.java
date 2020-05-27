@@ -46,9 +46,8 @@ public class NoArvore <T> implements Comparable<T>{
 
     @Override
     public int compareTo(T o) {
-        Aluno value = (Aluno)valor;
-        NoArvore valueCompareAux = (NoArvore)o;
-        Aluno valueCompare = (Aluno) valueCompareAux.getValor();
-        return value.compareTo(valueCompare);
+        Aluno thisValue = (Aluno) this.valor;
+        Aluno comparableValue = (Aluno)o;
+        return thisValue.compareTo(comparableValue);
     }
 }

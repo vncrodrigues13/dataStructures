@@ -25,6 +25,10 @@ public class Aluno implements Comparable{
         this.nome = nome;
     }
 
+    public Aluno(String vinicius, int i, int i0, int i1, int i2, int i3, float f) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public String getNome() {
         return nome;
     }
