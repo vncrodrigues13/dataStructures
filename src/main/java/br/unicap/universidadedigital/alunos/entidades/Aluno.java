@@ -1,6 +1,6 @@
 package main.java.br.unicap.universidadedigital.alunos.entidades;
 
-public class Aluno implements Comparable{
+public class Aluno implements Comparable<Aluno>{
 
     private String nome;
     private String CPF;
@@ -24,11 +24,6 @@ public class Aluno implements Comparable{
     public Aluno(String nome) {
         this.nome = nome;
     }
-
-    public Aluno(String vinicius, int i, int i0, int i1, int i2, int i3, float f) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     public String getNome() {
         return nome;
     }
@@ -97,9 +92,8 @@ public class Aluno implements Comparable{
     }
 
     @Override
-    public int compareTo(Object o) {
-        Aluno temp = (Aluno)o;
-        return this.matricula.compareTo(temp.matricula);
+    public int compareTo(Aluno o) {
+        return this.matricula.compareTo(o.matricula);
     }
 
 }

@@ -1,12 +1,12 @@
 package main.java.br.unicap.universidadedigital.colecoes.comum;
 import main.java.br.unicap.universidadedigital.alunos.entidades.Aluno;
-public class NoArvore <T> implements Comparable<T>{
+public class NoArvore <T extends Comparable> implements Comparable<T> {
     
     private T valor;    
     private NoArvore esquerda;
     private NoArvore direita;
     
-      
+    public NoArvore(){}      
     public NoArvore(T valor){
         this.valor = valor;
     }
@@ -19,13 +19,13 @@ public class NoArvore <T> implements Comparable<T>{
         this.valor = valor;
     }
 
-    public NoArvore getEsquerda(){
+    public NoArvore<T> getEsquerda(){
         return this.esquerda;
     }
     public void setEsquerda(T element){
         this.esquerda = (new NoArvore(element));
     }
-    public NoArvore getDireita(){
+    public NoArvore<T> getDireita(){
         return this.direita;
     }
     public void setDireita(T element){
@@ -35,7 +35,7 @@ public class NoArvore <T> implements Comparable<T>{
     
     @Override
     public String toString() {
-        return valor.toString();
+        return ((Aluno)this.valor).toString();
     }
  
     @Override
@@ -43,11 +43,12 @@ public class NoArvore <T> implements Comparable<T>{
         NoArvore<T> novo = new NoArvore<>(valor);
         return novo;
     }
-
+    
     @Override
-    public int compareTo(T o) {
-        Aluno thisValue = (Aluno) this.valor;
+    public int compareTo(T o){
+        Aluno value = (Aluno) this.valor;
         Aluno comparableValue = (Aluno)o;
-        return thisValue.compareTo(comparableValue);
+        return comparableValue.compareTo(value);
     }
+    
 }

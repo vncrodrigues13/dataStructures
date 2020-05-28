@@ -20,11 +20,13 @@ public class testarvor {
         */
         Aluno a1 = new Aluno("Catapóbio",  "00000000000", 22, "000000", 600.00f, 0.00f);
         Aluno a2 = new Aluno("Maria",      "99999999999", 15, "999999", 1500.00f, 100.00f);
-        Arvore test = new Arvore();
-        test.adicionar(a2);
+        Aluno a3 = new Aluno("Márcio",     "77777777777", 12, "777777", 560.00f, 10.00f);
+
+        Arvore<Aluno> test = new Arvore<>();
+        
         test.adicionar(a1);
-        System.out.println(test.getRaiz());
-        System.out.println(test.getRaiz().getEsquerda());
-        System.out.println(test.getRaiz().getDireita());
+        test.adicionar(a2);
+        test.adicionar(a3);
+        
     }
 }

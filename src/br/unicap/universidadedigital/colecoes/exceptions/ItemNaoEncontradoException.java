@@ -12,6 +12,7 @@ package br.unicap.universidadedigital.colecoes.exceptions;
 public class ItemNaoEncontradoException extends Exception {
 
     public ItemNaoEncontradoException() {
+        System.out.println("Item não encontrado");
     }
     
 }

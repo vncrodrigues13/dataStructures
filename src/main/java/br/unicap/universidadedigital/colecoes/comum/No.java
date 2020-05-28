@@ -12,7 +12,7 @@ package main.java.br.unicap.universidadedigital.colecoes.comum;
 public class No <T> {
     
     private T valor;    
-    private No proximo;
+    private No<T> proximo;
     
       
     public No(T valor) {
@@ -27,7 +27,7 @@ public class No <T> {
         this.valor = valor;
     }
 
-    public No getProximo() {
+    public No<T> getProximo() {
         return proximo;
     }
 

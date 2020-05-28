@@ -12,6 +12,7 @@ package main.java.br.unicap.universidadedigital.colecoes.exceptions;
 public class PosicaoInvalidaException extends Exception {
 
     public PosicaoInvalidaException() {
+        System.out.println("Posicao invalida");
     }
     
 }

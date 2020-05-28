@@ -12,8 +12,8 @@ package main.java.br.unicap.universidadedigital.colecoes.comum;
 public class NoDuplamenteLigado <T> {
     
     private T valor;    
-    private NoDuplamenteLigado proximo;
-    private NoDuplamenteLigado anteror;
+    private NoDuplamenteLigado<T> proximo;
+    private NoDuplamenteLigado<T> anteror;
       
     public NoDuplamenteLigado(T valor) {
         this.valor = valor;
@@ -27,7 +27,7 @@ public class NoDuplamenteLigado <T> {
         this.valor = valor;
     }
 
-    public NoDuplamenteLigado getProximo() {
+    public NoDuplamenteLigado<T> getProximo() {
         return proximo;
     }
 
@@ -35,7 +35,7 @@ public class NoDuplamenteLigado <T> {
         this.proximo = proximo;
     }
     
-    public NoDuplamenteLigado getAnterior(){
+    public NoDuplamenteLigado<T> getAnterior(){
         return this.proximo;
     }
     public void setAnterior(NoDuplamenteLigado<T> anterior){

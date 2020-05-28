@@ -2,12 +2,12 @@ package main.java.br.unicap.universidadedigital.colecoes.arvore;
 
 import main.java.br.unicap.universidadedigital.colecoes.comum.NoArvore;
 import br.unicap.universidadedigital.colecoes.exceptions.ItemNaoEncontradoException;
-
 import main.java.br.unicap.universidadedigital.colecoes.listas.ListaSimplesmenteLigada;
 
 public class Arvore<T extends Comparable<T>> {
 
-    private NoArvore raiz;
+    private NoArvore<T> raiz;
+    private ListaSimplesmenteLigada<T> listaAuxiliar = new ListaSimplesmenteLigada<>();
 
     public Arvore() {
         raiz = null;
@@ -28,49 +28,30 @@ public class Arvore<T extends Comparable<T>> {
     }
 
     public void adicionar(T element) {
-        NoArvore elem = new NoArvore(element);
-        if (raiz == null) {
-            raiz = elem;
+        if (this.raiz == null) {
+            raiz = new NoArvore<T>(element);
         } else {
             treeAdd(this.raiz, element);
         }
     }
 
-    private NoArvore<T> treeAdd(NoArvore raiz, T element) {
-        if (raiz == null) {
-            return new NoArvore<T>(element);
+    private void treeAdd(NoArvore<T> raiz, T element) {
+        int comparableValue = raiz.compareTo(element);
+        if (comparableValue >= 0) {
+            if (raiz.getDireita() != null) {
+                treeAdd(raiz.getDireita(), element);
+            } else {
+                raiz.setDireita(element);
+            }
+        } else {
+            if (raiz.getEsquerda() != null) {
+                treeAdd(raiz.getEsquerda(), element);
+            } else {
+                raiz.setEsquerda(element);
+            }
         }
-        int cmp = raiz.compareTo(element);
-
-        if (cmp     > 0) {
-            raiz.setDireita(treeAdd(raiz.getDireita(), element));
-        } else if (cmp < 0) {
-            raiz.setEsquerda(treeAdd(raiz.getEsquerda(), element));
-        }else{
-            return raiz;
-        }
-        return raiz;
     }
 
-    /*
-    
-    private Node addRecursive(Node current, int value) {
-    if (current == null) {
-        return new Node(value);
-    }
- 
-    if (value < current.value) {
-        current.left = addRecursive(current.left, value);
-    } else if (value > current.value) {
-        current.right = addRecursive(current.right, value);
-    } else {
-        // value already exists
-        return current;
-    }
- 
-    return current;
-}
-     */
     public NoArvore<T> getElement(T element) throws ItemNaoEncontradoException {
         return buscarElemento(raiz, element);
     }
@@ -80,29 +61,74 @@ public class Arvore<T extends Comparable<T>> {
             throw new ItemNaoEncontradoException();
         }
 
-        int aux = raiz.compareTo(element);
+        int comparableValue = raiz.compareTo(element);
 
-        if (aux > 0) {
+        if (comparableValue > 0) {
             return buscarElemento(raiz.getDireita(), element);
-        } else if (aux < 0) {
+        } else if (comparableValue < 0) {
             return buscarElemento(raiz.getEsquerda(), element);
         } else {
-            return raiz;
+            return raiz.clone();
         }
-    }
-
-    public ListaSimplesmenteLigada<T> getPreOrdem() {
-        ListaSimplesmenteLigada<T> listaauxiliar = new ListaSimplesmenteLigada<>();
-        return listaauxiliar;
     }
 
     public void traverseInOrder(NoArvore<T> raiz) {
 
         if (raiz != null) {
             traverseInOrder(raiz.getEsquerda());
-            System.out.print(" " + raiz.getValor());
+            System.out.println(" " + raiz.getValor().toString());
             traverseInOrder(raiz.getDireita());
         }
     }
+
+    public ListaSimplesmenteLigada<T> preOrder() {
+        listaAuxiliar = new ListaSimplesmenteLigada<>();
+        preOrder(raiz);
+        return this.listaAuxiliar;
+    }
+
+    private void preOrder(NoArvore<T> raiz) {
+        listaAuxiliar.adicionaFim(raiz.getValor());
+        if (raiz.getEsquerda() != null) {
+            preOrder(raiz.getEsquerda());
+        } 
+        if (raiz.getDireita() != null) {
+            preOrder(raiz.getDireita());
+        } 
+    }
+
+
+    public ListaSimplesmenteLigada<T> order(){
+        listaAuxiliar = new ListaSimplesmenteLigada<>();
+        order(raiz);
+        return this.listaAuxiliar;
+    }
+
+    public void order(NoArvore<T> raiz){
+        if (raiz.getEsquerda() != null) {
+            order(raiz.getEsquerda());
+        } 
+        listaAuxiliar.adicionaFim(raiz.getValor());
+        if (raiz.getDireita() != null) {
+            order(raiz.getDireita());
+        } 
+    }
+
+    public ListaSimplesmenteLigada<T> posOrder(){
+        listaAuxiliar = new ListaSimplesmenteLigada<>();
+        posOrder(raiz);
+        return this.listaAuxiliar;
+    }
+
+    public void posOrder(NoArvore<T> raiz){
+        if (raiz.getEsquerda() != null) {
+            order(raiz.getEsquerda());
+        } 
+        if (raiz.getDireita() != null) {
+            order(raiz.getDireita());
+        } 
+        listaAuxiliar.adicionaFim(raiz.getValor());
+    }
+
 
 }
