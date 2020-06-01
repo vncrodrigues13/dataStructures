@@ -131,4 +131,43 @@ public class Arvore<T extends Comparable<T>> {
     }
 
 
+    private NoArvore<T> ultimoValoraEsquerda(NoArvore<T> raiz){
+        if (raiz.getEsquerda() != null){
+            return ultimoValoraEsquerda(raiz.getEsquerda());
+        }else{
+            return raiz;
+        }
+    }
+
+    public NoArvore<T> removerFindValue(NoArvore<T> raiz, T element) throws ItemNaoEncontradoException {
+        int comparableValue = raiz.compareTo(element);
+
+        if (comparableValue > 0) {
+            return buscarElemento(raiz.getDireita(), element);
+        } else if (comparableValue < 0) {
+            return buscarElemento(raiz.getEsquerda(), element);
+        } else {
+            return raiz.clone();
+        }
+    }
+
+    public NoArvore<T> remover(NoArvore<T> raiz){
+        if(raiz.getDireita() == null && raiz.getEsquerda() == null){
+            //caso n tenha filhos
+            return null;
+        }else if (raiz.getDireita() != null && raiz.getEsquerda() == null){
+
+            //caso so tenha filho do lado direito
+            return raiz.getDireita();
+        }else if (raiz.getDireita() == null && raiz.getEsquerda() != null){
+
+            //caso so tenha filho do lado esquerdo
+            return raiz.getEsquerda();
+        }else{
+            //caso tenha dois filhos 
+            //https://pt.wikipedia.org/wiki/%C3%81rvore_bin%C3%A1ria_de_busca
+        }
+    }
+
+
 }

@@ -81,9 +81,10 @@ public class Aluno implements Comparable<Aluno>{
     
     @Override
     public boolean equals(Object obj) {
-        return (this.matricula.equals(
-                    ((Aluno)obj).matricula)                
-                );
+        if (obj instanceof Aluno){
+            return (this.matricula.equals(((Aluno)obj).matricula));
+        }
+        return false;
     }
     
     @Override

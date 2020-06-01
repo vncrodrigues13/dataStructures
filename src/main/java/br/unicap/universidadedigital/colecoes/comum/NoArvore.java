@@ -31,7 +31,7 @@ public class NoArvore <T extends Comparable> implements Comparable<T> {
     public void setDireita(T element){
         this.direita = (new NoArvore(element));
     }
-    
+
     
     @Override
     public String toString() {
@@ -50,5 +50,6 @@ public class NoArvore <T extends Comparable> implements Comparable<T> {
         Aluno comparableValue = (Aluno)o;
         return comparableValue.compareTo(value);
     }
-    
+
+        
 }
