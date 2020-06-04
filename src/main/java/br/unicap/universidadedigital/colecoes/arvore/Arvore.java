@@ -134,8 +134,8 @@ public class Arvore<T extends Comparable<T>> {
         if (raiz.getEsquerda() != null) {
             return ultimoValoraEsquerda(raiz.getEsquerda());
         } else {
+            valor = raiz.clone();
             if (raiz.getDireita() != null) {
-                valor = raiz.clone();
                 raiz = raiz.getDireita();
             }
             valor = raiz;
@@ -144,61 +144,59 @@ public class Arvore<T extends Comparable<T>> {
     }
 
     public void remover(T element) {
-        NoArvore<T> raizAlterada = modificandoArvore(element);
-        refazerArvore(raiz, raizAlterada);
+        if (buscarElemento(raiz, element) != null) {
+            NoArvore<T> raizAlterada = refatorandoNo(element);
+            refatorandoArvore(raiz, raizAlterada);
+        } else {
+            System.out.println("Elemento não existe na árvore");
+        }
 
     }
 
-    private void refazerArvore(NoArvore<T> raiz, NoArvore<T> raizAlterada) {
+    private void refatorandoArvore(NoArvore<T> raiz, NoArvore<T> raizAlterada) {
         if (raiz.getDireita().equals(raizAlterada)) {
-            raiz.setDireita(raizAlterada.getValor());
             raiz.setDireita(raizAlterada);
         }
         if (raiz.getEsquerda().equals(raizAlterada)) {
-            raiz.setEsquerda(raizAlterada.getValor());
             raiz.setEsquerda(raizAlterada);
         }
 
         if (raiz.compareTo(raizAlterada.getValor()) > 0) {
-            refazerArvore(raiz.getDireita(), raizAlterada);
+            refatorandoArvore(raiz.getDireita(), raizAlterada);
         } else {
-            refazerArvore(raiz.getEsquerda(), raizAlterada);
+            refatorandoArvore(raiz.getEsquerda(), raizAlterada);
         }
     }
 
-    private NoArvore<T> modificandoArvore(T element) {
+    private NoArvore<T> refatorandoNo(T element) {
         NoArvore<T> NoElementoRm = buscarElemento(raiz, element);
-        if (NoElementoRm != null) {
-            switch (NoElementoRm.numeroDeFilhos()) {
-                case 2:
-                    NoElementoRm = remover(NoElementoRm, element);
-                    break;
-                case 1:
-                    NoElementoRm = removerFolha(NoElementoRm);
-                    break;
-                case 0:
-                    return null;
-            }
-        } else {
-            System.out.println("Esse elemento não existe");
-            return null;
-        }
 
+        switch (NoElementoRm.numeroDeFilhos()) {
+            case 2:
+                NoElementoRm = removerDoisFilhos(NoElementoRm);
+                break;
+            case 1:
+                NoElementoRm = removerUmFilho(NoElementoRm);
+                break;
+            case 0:
+                return null;
+
+        }
         return NoElementoRm;
 
     }
 
-    private NoArvore<T> remover(NoArvore<T> raiz, T element) {
+    private NoArvore<T> removerDoisFilhos(NoArvore<T> raiz) {
         T valueReplace = ultimoValoraEsquerda(raiz.getDireita()).getValor();
         raiz.setValor(valueReplace);
         return raiz;
     }
 
-    private NoArvore<T> removerFolha(NoArvore<T> raiz) {
+    private NoArvore<T> removerUmFilho(NoArvore<T> raiz) {
         if (raiz.getDireita() != null) {
-            raiz.setValor(raiz.getDireita().getValor());
+            raiz = raiz.getDireita();
         } else {
-            raiz.setValor(raiz.getEsquerda().getValor());
+            raiz = raiz.getEsquerda();
         }
         return raiz;
     }
