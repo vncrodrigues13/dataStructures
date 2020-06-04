@@ -56,9 +56,9 @@ public class Arvore<T extends Comparable<T>> {
         return buscarElemento(raiz, element);
     }
 
-    private NoArvore<T> buscarElemento(NoArvore<T> raiz, T element) throws ItemNaoEncontradoException {
+    private NoArvore<T> buscarElemento(NoArvore<T> raiz, T element) {
         if (raiz == null) {
-            throw new ItemNaoEncontradoException();
+            return null;
         }
 
         int comparableValue = raiz.compareTo(element);
@@ -68,7 +68,7 @@ public class Arvore<T extends Comparable<T>> {
         } else if (comparableValue < 0) {
             return buscarElemento(raiz.getEsquerda(), element);
         } else {
-            return raiz.clone();
+            return raiz;
         }
     }
 
@@ -91,83 +91,116 @@ public class Arvore<T extends Comparable<T>> {
         listaAuxiliar.adicionaFim(raiz.getValor());
         if (raiz.getEsquerda() != null) {
             preOrder(raiz.getEsquerda());
-        } 
+        }
         if (raiz.getDireita() != null) {
             preOrder(raiz.getDireita());
-        } 
+        }
     }
 
-
-    public ListaSimplesmenteLigada<T> order(){
+    public ListaSimplesmenteLigada<T> order() {
         listaAuxiliar = new ListaSimplesmenteLigada<>();
         order(raiz);
         return this.listaAuxiliar;
     }
 
-    public void order(NoArvore<T> raiz){
+    public void order(NoArvore<T> raiz) {
         if (raiz.getEsquerda() != null) {
             order(raiz.getEsquerda());
-        } 
+        }
         listaAuxiliar.adicionaFim(raiz.getValor());
         if (raiz.getDireita() != null) {
             order(raiz.getDireita());
-        } 
+        }
     }
 
-    public ListaSimplesmenteLigada<T> posOrder(){
+    public ListaSimplesmenteLigada<T> posOrder() {
         listaAuxiliar = new ListaSimplesmenteLigada<>();
         posOrder(raiz);
         return this.listaAuxiliar;
     }
 
-    public void posOrder(NoArvore<T> raiz){
+    public void posOrder(NoArvore<T> raiz) {
         if (raiz.getEsquerda() != null) {
             order(raiz.getEsquerda());
-        } 
+        }
         if (raiz.getDireita() != null) {
             order(raiz.getDireita());
-        } 
+        }
         listaAuxiliar.adicionaFim(raiz.getValor());
     }
 
-
-    private NoArvore<T> ultimoValoraEsquerda(NoArvore<T> raiz){
-        if (raiz.getEsquerda() != null){
+    private NoArvore<T> ultimoValoraEsquerda(NoArvore<T> raiz) {
+        NoArvore<T> valor;
+        if (raiz.getEsquerda() != null) {
             return ultimoValoraEsquerda(raiz.getEsquerda());
-        }else{
-            return raiz;
-        }
-    }
-
-    public NoArvore<T> removerFindValue(NoArvore<T> raiz, T element) throws ItemNaoEncontradoException {
-        int comparableValue = raiz.compareTo(element);
-
-        if (comparableValue > 0) {
-            return buscarElemento(raiz.getDireita(), element);
-        } else if (comparableValue < 0) {
-            return buscarElemento(raiz.getEsquerda(), element);
         } else {
-            return raiz.clone();
+            if (raiz.getDireita() != null) {
+                valor = raiz.clone();
+                raiz = raiz.getDireita();
+            }
+            valor = raiz;
+            return valor;
         }
     }
 
-    public NoArvore<T> remover(NoArvore<T> raiz){
-        if(raiz.getDireita() == null && raiz.getEsquerda() == null){
-            //caso n tenha filhos
+    public void remover(T element) {
+        NoArvore<T> raizAlterada = modificandoArvore(element);
+        refazerArvore(raiz, raizAlterada);
+
+    }
+
+    private void refazerArvore(NoArvore<T> raiz, NoArvore<T> raizAlterada) {
+        if (raiz.getDireita().equals(raizAlterada)) {
+            raiz.setDireita(raizAlterada.getValor());
+            raiz.setDireita(raizAlterada);
+        }
+        if (raiz.getEsquerda().equals(raizAlterada)) {
+            raiz.setEsquerda(raizAlterada.getValor());
+            raiz.setEsquerda(raizAlterada);
+        }
+
+        if (raiz.compareTo(raizAlterada.getValor()) > 0) {
+            refazerArvore(raiz.getDireita(), raizAlterada);
+        } else {
+            refazerArvore(raiz.getEsquerda(), raizAlterada);
+        }
+    }
+
+    private NoArvore<T> modificandoArvore(T element) {
+        NoArvore<T> NoElementoRm = buscarElemento(raiz, element);
+        if (NoElementoRm != null) {
+            switch (NoElementoRm.numeroDeFilhos()) {
+                case 2:
+                    NoElementoRm = remover(NoElementoRm, element);
+                    break;
+                case 1:
+                    NoElementoRm = removerFolha(NoElementoRm);
+                    break;
+                case 0:
+                    return null;
+            }
+        } else {
+            System.out.println("Esse elemento não existe");
             return null;
-        }else if (raiz.getDireita() != null && raiz.getEsquerda() == null){
-
-            //caso so tenha filho do lado direito
-            return raiz.getDireita();
-        }else if (raiz.getDireita() == null && raiz.getEsquerda() != null){
-
-            //caso so tenha filho do lado esquerdo
-            return raiz.getEsquerda();
-        }else{
-            //caso tenha dois filhos 
-            //https://pt.wikipedia.org/wiki/%C3%81rvore_bin%C3%A1ria_de_busca
         }
+
+        return NoElementoRm;
+
     }
 
+    private NoArvore<T> remover(NoArvore<T> raiz, T element) {
+        T valueReplace = ultimoValoraEsquerda(raiz.getDireita()).getValor();
+        raiz.setValor(valueReplace);
+        return raiz;
+    }
+
+    private NoArvore<T> removerFolha(NoArvore<T> raiz) {
+        if (raiz.getDireita() != null) {
+            raiz.setValor(raiz.getDireita().getValor());
+        } else {
+            raiz.setValor(raiz.getEsquerda().getValor());
+        }
+        return raiz;
+    }
 
 }

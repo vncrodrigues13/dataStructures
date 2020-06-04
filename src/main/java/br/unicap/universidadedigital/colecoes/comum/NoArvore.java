@@ -25,11 +25,28 @@ public class NoArvore <T extends Comparable> implements Comparable<T> {
     public void setEsquerda(T element){
         this.esquerda = (new NoArvore(element));
     }
+    public void setEsquerda(NoArvore<T> element){
+        this.esquerda = element;
+    }
     public NoArvore<T> getDireita(){
         return this.direita;
     }
+    
     public void setDireita(T element){
         this.direita = (new NoArvore(element));
+    }
+    public void setDireita(NoArvore<T> element){
+        this.direita = element;
+    }
+
+    public int numeroDeFilhos(){
+        if (getDireita() != null && getEsquerda() != null){
+            return 2;
+        }else if ((getDireita() != null && getEsquerda() == null) || (getDireita() == null && getEsquerda() != null)){
+            return 1;
+        }else {
+            return 0;
+        }
     }
 
     
@@ -49,6 +66,14 @@ public class NoArvore <T extends Comparable> implements Comparable<T> {
         Aluno value = (Aluno) this.valor;
         Aluno comparableValue = (Aluno)o;
         return comparableValue.compareTo(value);
+    }
+    
+    @Override
+    public boolean equals(Object o){
+        if (o instanceof NoArvore){
+            return this.valor.compareTo((NoArvore)o) == 0;
+        }
+        return false;
     }
 
         
