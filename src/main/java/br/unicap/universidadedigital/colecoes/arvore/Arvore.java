@@ -27,6 +27,7 @@ public class Arvore<T extends Comparable<T>> {
         }
     }
 
+    /*
     public void adicionar(T element) {
         if (this.raiz == null) {
             raiz = new NoArvore<T>(element);
@@ -34,7 +35,17 @@ public class Arvore<T extends Comparable<T>> {
             treeAdd(this.raiz, element);
         }
     }
-
+    */
+    public void adicionar(T element){
+        if (this.raiz == null){
+            raiz = new NoArvore<T>(element);
+        }else{
+            this.raiz = treeAdd(raiz,element);
+        }
+        
+    }
+    
+    /*
     private void treeAdd(NoArvore<T> raiz, T element) {
         int comparableValue = raiz.compareTo(element);
         if (comparableValue >= 0) {
@@ -50,6 +61,92 @@ public class Arvore<T extends Comparable<T>> {
                 raiz.setEsquerda(element);
             }
         }
+    }
+    */
+    
+    private NoArvore<T> treeAdd(NoArvore<T> raiz, T element){
+        int comparableValue = raiz.compareTo(element);
+        if (comparableValue >= 0){
+            if (raiz.getDireita() != null){
+                return treeAdd(raiz.getDireita(),element);
+            }else{
+                raiz.setDireita(element);
+            }
+        }else{
+            if (raiz.getEsquerda() != null){
+                return treeAdd(raiz.getEsquerda(),element);
+            }else{
+                raiz.setEsquerda(element);
+            }
+        }
+        
+        if (fatorDeBalanceamento(raiz) > 1 || fatorDeBalanceamento(raiz) < 1){
+            balance(raiz);
+        }
+        
+        
+        return raiz;
+    }
+      
+    
+    public int fatorDeBalanceamento(NoArvore<T> raiz){
+        if (raiz.getEsquerda() != null && raiz.getDireita() != null){
+            //in case that have 2 chilrens
+            return fatorDeBalanceamento(raiz.getEsquerda()) - fatorDeBalanceamento(raiz.getDireita());
+        }
+        else if (raiz.getEsquerda() != null && raiz.getDireita() == null){
+            //left children only
+            return fatorDeBalanceamento(raiz.getEsquerda()) + 1; 
+            //if i don't have the right children, we put a -1 in place, and continue the recursion
+        }
+        else if (raiz.getEsquerda() == null && raiz.getDireita() != null){
+            //right children only
+            return 1 - fatorDeBalanceamento(raiz.getDireita());
+        }else{
+            return 0;
+        }
+    }
+    
+    
+    private NoArvore<T> balance(NoArvore<T> raiz){
+        NoArvore<T> aux;
+        if (raiz.getDireita() != null){
+            //se houver nó a direita, só pode ser apenas RR ou RL
+            if (raiz.getDireita().getDireita()!= null) //se houver no a direita, após a direita, significa que ela é um RR
+                return rotationRR(raiz);
+            else //se houver no a esquerda, após a direita, significa que ela é um RL
+                return rotationRL(raiz);
+        }else{
+            //se houver nó a esquerda, só pode ser LL ou LR
+            if (raiz.getEsquerda().getEsquerda() != null) //se houver no a esquerda, após a esquerda, significa que ela é um LL
+                return rotationLL(raiz);
+            else //se houver nó a direita, após a esquerda, significa que ela é um LR
+                return rotationLR(raiz);
+        }
+            
+    }
+    
+    
+    private NoArvore<T> rotationRR(NoArvore<T> raiz){
+        NoArvore<T> x = raiz.getDireita();
+        raiz.setDireita(x.getEsquerda());
+        x.setEsquerda(raiz);
+        return x;
+    }
+    
+    private NoArvore<T> rotationRL(NoArvore<T> raiz){
+        raiz.setDireita(rotationLL(raiz.getDireita()));
+        return rotationRR(raiz);
+    }
+    private NoArvore<T> rotationLL(NoArvore<T> raiz){
+        NoArvore<T> x = raiz.getEsquerda();
+        raiz.setEsquerda(x.getDireita());
+        x.setDireita(raiz);
+        return x;
+    }
+    private NoArvore<T> rotationLR(NoArvore<T> raiz){
+        raiz.setEsquerda(rotationRR(raiz.getEsquerda()));
+        return rotationLL(raiz);
     }
 
     public NoArvore<T> getElement(T element) throws ItemNaoEncontradoException {
@@ -200,5 +297,13 @@ public class Arvore<T extends Comparable<T>> {
         }
         return raiz;
     }
+    
+    
+    
+       
+      
+    
+    
+    
 
 }
